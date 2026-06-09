@@ -12,6 +12,10 @@ void getData() {
     server.send(200, "application/json", json);
 }
 
+void handleRoot() {
+    server.send(200, "text/html", "<h1>Hello</h1>");
+}
+
 void setup() {
     Serial.begin(115200);
     delay(1000); //small 1s delay so it doesnt immediately jump
