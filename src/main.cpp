@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <WebServer.h>  
+#include "thermsistor.h"
 
 const char* ssid = "1051A";
 const char* password = "Secord1051A";
@@ -8,7 +9,10 @@ const char* password = "Secord1051A";
 WebServer server(80);  // Create a web server on port 80
 
 void getData() {
-    String json = "{\"temperature\": 24.5, \"humidity\": 60}";
+    float temp = readTemperatureC();
+    String json = "{";
+    json += "\"temperature\": ";
+    json += String(temp, 2);
     server.send(200, "application/json", json);
 }
 
