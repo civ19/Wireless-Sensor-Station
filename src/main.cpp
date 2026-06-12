@@ -3,26 +3,34 @@
 #include <WebServer.h>  
 #include "thermsistor.h"
 
+#define THERM_PIN 1
+
 const char* ssid = "1051A";
 const char* password = "Secord1051A";
 
 WebServer server(80);  // Create a web server on port 80
+
+//4h time debt
 
 void getData() {
     float temp = readTemperatureC();
     String json = "{";
     json += "\"temperature\": ";
     json += String(temp, 2);
+    json += ", \"humidity\": ";
+    json += "60%}";
     server.send(200, "application/json", json);
 }
 
 void handleRoot() {
     server.send(200, "text/html", "<h1>Hello</h1>");
+    
 }
 
 void setup() {
     Serial.begin(115200);
     delay(1000); //small 1s delay so it doesnt immediately jump
+    analogSetPinAttenuation(THERM_PIN, ADC_11db);
     
     Serial.print("Connecting to WiFi: "); Serial.print(ssid);
     WiFi.begin(ssid, password);
