@@ -3,7 +3,7 @@
 #include <WebServer.h>  
 #include "thermsistor.h"
 #include "photoresistor.h"
-
+/*
 const char* ssid = "1051A";
 const char* password = "Secord1051A";
 
@@ -93,4 +93,4 @@ void loop() {
     if(WiFi.status() == WL_CONNECTED) {
         server.handleClient();
     }
-}
+} */
