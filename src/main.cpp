@@ -22,7 +22,7 @@ void getData() {
     json += String(temp, 2);
     json += ", \"light\": ";
     json += light;
-    json += " \"distance\": ";
+    json += ", \"distance\": ";
     json += String(dist, 2);
     json += "}";
     server.send(200, "application/json", json);
