@@ -38,7 +38,7 @@ void handleRoot() {
     <body>
         <h1>Wireless Sensor Station</h1>
 
-            <p>Temperature: <span id="temp">Loading...</span> °C</p>
+            <p>Temperature: <span id="temp">Loading...</span></p>
             <p>Light: <span id="light">Loading...</span></p>
             <p>Distance: <span id="distance">Loading...</span></p>
 
@@ -48,11 +48,11 @@ void handleRoot() {
             const data = await response.json();
 
             document.getElementById('temp').textContent =
-                data.temperature;
+                data.temperature + "°C";
             document.getElementById('light').textContent = 
                 data.light + "%";
             document.getElementById('distance').textContent =
-                data.distance;
+                data.distance + "cm";
         }
 
         updateData();
