@@ -2,14 +2,6 @@
 #include <Arduino.h>
 
 
-void setup() {
-    pinMode(TRIG, OUTPUT);
-    pinMode(ECHO, INPUT);
-    Serial.begin(115200);
-
-    digitalWrite(TRIG, LOW);
-}
-
 float readDistanceCM() {
     digitalWrite(TRIG, LOW);
     delayMicroseconds(2); //2 us
@@ -24,13 +16,4 @@ float readDistanceCM() {
 
     return dist;
 
-}
-void loop() {
-    float d = readDistanceCM();
-
-    Serial.print("Distance: ");
-    Serial.print(d);
-    Serial.println(" cm");
-
-    delay(500);
 }
