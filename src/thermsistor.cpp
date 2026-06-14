@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include <math.h>
-
-#define THERM_PIN 1
+#include "thermsistor.h"
 
 // Assumptions (typical Freenove kit thermistor)
 const float SERIES_RESISTOR = 10000.0;   // 10k resistor

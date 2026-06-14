@@ -2,8 +2,7 @@
 #include <WiFi.h>
 #include <WebServer.h>  
 #include "thermsistor.h"
-
-#define THERM_PIN 1
+#include "photoresistor.h"
 
 const char* ssid = "1051A";
 const char* password = "Secord1051A";
@@ -14,11 +13,13 @@ WebServer server(80);  // Create a web server on port 80
 
 void getData() {
     float temp = readTemperatureC();
+    int light = readLightPercent();
     String json = "{";
     json += "\"temperature\": ";
     json += String(temp, 2);
-    json += ", \"humidity\": ";
-    json += "60}";
+    json += ", \"light\": ";
+    json += light;
+    json += "}";
     server.send(200, "application/json", json);
 }
 
@@ -33,6 +34,7 @@ void handleRoot() {
         <h1>Wireless Sensor Station</h1>
 
             <p>Temperature: <span id="temp">Loading...</span> °C</p>
+            <p>Light: <span id="light">Loading...</span></p>
 
     <script>
         async function updateData() {
@@ -41,6 +43,8 @@ void handleRoot() {
 
             document.getElementById('temp').textContent =
                 data.temperature;
+            document.getElementById('light').textContent = 
+                data.light + "%";
         }
 
         updateData();
@@ -57,6 +61,7 @@ void setup() {
     Serial.begin(115200);
     delay(1000); //small 1s delay so it doesnt immediately jump
     analogSetPinAttenuation(THERM_PIN, ADC_11db);
+    analogSetPinAttenuation(LDR_PIN, ADC_11db);
     
     Serial.print("Connecting to WiFi: "); Serial.print(ssid);
     WiFi.begin(ssid, password);
@@ -69,7 +74,7 @@ void setup() {
 
     if(WiFi.status() == WL_CONNECTED) { //if it connects we start up the web server and mappings
         Serial.println("\nConnected Sucessfully!");
-        Serial.print("Your link: http://"); Serial.print(WiFi.localIP()); Serial.println("/data");
+        Serial.print("Your link: http://"); Serial.print(WiFi.localIP()); Serial.println("/");
         
         //firing up the server
         server.on("/", handleRoot);
