@@ -6,8 +6,8 @@
 #include "distSensor.h"
 #include <SPIFFS.h>
 
-const char* ssid = "1051A";
-const char* password = "Secord1051A";
+const char* ssid = "wifi";
+const char* password = "pass";
 
 WebServer server(80);  // Create a web server on port 80
 
@@ -30,50 +30,13 @@ void getData() {
 }
 
 void handleRoot() {
-<<<<<<< ours
-    String html = R"rawliteral(
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Sensor Dashboard</title>
-    </head>
-    <body>
-        <h1>Wireless Sensor Station</h1>
-
-            <p>Temperature: <span id="temp">Loading...</span></p>
-            <p>Light: <span id="light">Loading...</span></p>
-            <p>Distance: <span id="distance">Loading...</span></p>
-
-    <script>
-        async function updateData() {
-            const response = await fetch('/data');
-            const data = await response.json();
-
-            document.getElementById('temp').textContent =
-                data.temperature + "°C";
-            document.getElementById('light').textContent = 
-                data.light + "%";
-            document.getElementById('distance').textContent =
-                data.distance + "cm";
-        }
-
-        updateData();
-        setInterval(updateData, 500);
-    </script>
-    </body>
-    </html>
-    )rawliteral";
-
-    server.send(200, "text/html", html);
-=======
     
     server.on("/", HTTP_GET, []() {
         File file = SPIFFS.open("/index.html", "r"); //get saved html fdile from spiffs and make it read only
         server.streamFile(file, "text/html"); //file = loaded file, text/html = content type of file. streamfile => send file contents to browser over http req. basically sendiung html page to browser http caller
-        file.close(); //obvious, releases  file
+        file.close(); //obvious, releases file
     });
    
->>>>>>> theirs
 }
 
 void setup() {
@@ -83,6 +46,11 @@ void setup() {
     analogSetPinAttenuation(LDR_PIN, ADC_11db);
     pinMode(TRIG, OUTPUT);
     pinMode(ECHO, INPUT);
+
+    if(!SPIFFS.begin(true)) {
+        Serial.println("SPIFFS mount failed");
+        return;
+    }
    
 
     digitalWrite(TRIG, LOW);
