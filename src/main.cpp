@@ -30,6 +30,7 @@ void getData() {
 }
 
 void handleRoot() {
+<<<<<<< ours
     String html = R"rawliteral(
     <!DOCTYPE html>
     <html>
@@ -64,6 +65,15 @@ void handleRoot() {
     )rawliteral";
 
     server.send(200, "text/html", html);
+=======
+    
+    server.on("/", HTTP_GET, []() {
+        File file = SPIFFS.open("/index.html", "r"); //get saved html fdile from spiffs and make it read only
+        server.streamFile(file, "text/html"); //file = loaded file, text/html = content type of file. streamfile => send file contents to browser over http req. basically sendiung html page to browser http caller
+        file.close(); //obvious, releases  file
+    });
+   
+>>>>>>> theirs
 }
 
 void setup() {
