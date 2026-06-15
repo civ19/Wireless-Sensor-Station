@@ -4,10 +4,10 @@
 #include "thermsistor.h"
 #include "photoresistor.h"
 #include "distSensor.h"
-#include <SPIFFS.h>
+#include <LittleFS.h>
 
-const char* ssid = "wifi";
-const char* password = "pass";
+const char* ssid = "1051A";
+const char* password = "Secord1051A";
 
 WebServer server(80);  // Create a web server on port 80
 
@@ -30,13 +30,15 @@ void getData() {
 }
 
 void handleRoot() {
-    
-    server.on("/", HTTP_GET, []() {
-        File file = SPIFFS.open("/index.html", "r"); //get saved html fdile from spiffs and make it read only
-        server.streamFile(file, "text/html"); //file = loaded file, text/html = content type of file. streamfile => send file contents to browser over http req. basically sendiung html page to browser http caller
-        file.close(); //obvious, releases file
-    });
-   
+    File file = LittleFS.open("/index.html", "r");
+
+    if (!file) {
+        server.send(404, "text/plain", "index.html not found");
+        return;
+    }
+
+    server.streamFile(file, "text/html");
+    file.close();
 }
 
 void setup() {
@@ -47,9 +49,13 @@ void setup() {
     pinMode(TRIG, OUTPUT);
     pinMode(ECHO, INPUT);
 
-    if(!SPIFFS.begin(true)) {
-        Serial.println("SPIFFS mount failed");
-        return;
+    
+
+    if (!LittleFS.begin(true)) { 
+    Serial.println("Critical Failure: LittleFS could not mount or auto-format!");
+    } else {
+        Serial.println("Success! LittleFS partition initialized.");
+        Serial.printf("Total Flash Space: %d bytes\n", LittleFS.totalBytes());
     }
    
 
