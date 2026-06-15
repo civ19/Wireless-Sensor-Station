@@ -49,8 +49,6 @@ void setup() {
     pinMode(TRIG, OUTPUT);
     pinMode(ECHO, INPUT);
 
-    
-
     if (!LittleFS.begin(true)) { 
     Serial.println("Critical Failure: LittleFS could not mount or auto-format!");
     } else {
@@ -77,6 +75,12 @@ void setup() {
         //firing up the server
         server.on("/", handleRoot);
         server.on("/data", getData);
+        server.onNotFound([]() {
+        Serial.print("Missing route: ");
+        Serial.println(server.uri());
+
+    server.send(404, "text/plain", "Not found");
+});
         server.begin();
 
     }
