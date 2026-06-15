@@ -1,0 +1,8 @@
+# Tell GitHub to treat everything in the SPIFFS data folder as primary code
+data/* linguist-vendored=false
+data/* linguist-documentation=false
+
+# Explicitly make sure the web files are detected
+*.html linguist-detectable=true
+*.css linguist-detectable=true
+*.js linguist-detectable=true
