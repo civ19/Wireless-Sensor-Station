@@ -20,13 +20,23 @@ void getData() {
 
     String json = "{";
     json += " \"temperature\": ";
-    json += String(temp, 2);
+    json += String(temp, 1);
     json += ", \"light\": ";
     json += light;
     json += ", \"distance\": ";
-    json += String(dist, 2);
+    json += String(dist, 1);
     json += "}";
     server.send(200, "application/json", json);
+}
+
+void routeJS() {
+    server.on("/app.js", []() {
+        File file = LittleFS.open("/app.js", "r");
+        server.streamFile(file, "application/javascript");
+        file.close();
+    });
+
+    server.on("/data", getData);
 }
 
 void handleRoot() {
@@ -63,7 +73,7 @@ void setup() {
     WiFi.begin(ssid, password);
     int att = 0;
     while(WiFi.status() != WL_CONNECTED && att < 40) {
-        delay(100);
+        delay(1000);
         Serial.print(".");
         att++;
     }
@@ -75,12 +85,9 @@ void setup() {
         //firing up the server
         server.on("/", handleRoot);
         server.on("/data", getData);
-        server.onNotFound([]() {
-        Serial.print("Missing route: ");
-        Serial.println(server.uri());
+    
+        routeJS();
 
-    server.send(404, "text/plain", "Not found");
-});
         server.begin();
 
     }

@@ -1,19 +1,32 @@
 #include "distSensor.h"
 #include <Arduino.h>
 
-
 float readDistanceCM() {
+    // Make sure TRIG starts LOW
     digitalWrite(TRIG, LOW);
-    delayMicroseconds(2); //2 us
-    
-    digitalWrite(TRIG, HIGH); //send out a 10us pulse, then echo receives it
+    delayMicroseconds(2);
+
+    // Send 10µs pulse
+    digitalWrite(TRIG, HIGH);
     delayMicroseconds(10);
     digitalWrite(TRIG, LOW);
 
-    //read echo pulse duration
-    long t = pulseIn(ECHO, HIGH); //return time echo goes high in us
-    float dist = t * 0.0343/2; //d = t*
+    // Read echo pulse (with timeout!)
+    long t = pulseIn(ECHO, HIGH, 30000); // 30ms timeout
+
+    // Debug (VERY useful right now)
+    Serial.print("Echo time (us): ");
+    Serial.println(t);
+
+    // If no echo received
+    if (t == 0) {
+        return -1; // indicates "no reading"
+    }
+
+    // Convert to distance (cm)
+    float dist = (t * 0.0343) / 2.0;
+
+    Serial.println(dist);
 
     return dist;
-
 }
