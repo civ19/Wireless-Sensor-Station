@@ -4,7 +4,7 @@
 #include "thermsistor.h"
 #include "photoresistor.h"
 #include "distSensor.h"
-#include <LittleFS.h>
+
 
 const char* ssid = "1051A";
 const char* password = "Secord1051A";
@@ -29,35 +29,8 @@ void getData() {
     server.send(200, "application/json", json);
 }
 
-void routeJS() {
-    server.on("/app.js", []() {
-        File file = LittleFS.open("/app.js", "r");
-        server.streamFile(file, "application/javascript");
-        file.close();
-    });
 
-    server.on("/data", getData);
-}
 
-void routeCSS() {
-    server.on("/style.css", []() {
-        File file = LittleFS.open("/style.css", "r");
-        server.streamFile(file, "text/css");
-        file.close();
-    });
-}
-
-void handleRoot() {
-    File file = LittleFS.open("/index.html", "r");
-
-    if (!file) {
-        server.send(404, "text/plain", "index.html not found");
-        return;
-    }
-
-    server.streamFile(file, "text/html");
-    file.close();
-}
 
 void setup() {
     Serial.begin(115200);
@@ -67,12 +40,6 @@ void setup() {
     pinMode(TRIG, OUTPUT);
     pinMode(ECHO, INPUT);
 
-    if (!LittleFS.begin(true)) { 
-    Serial.println("Critical Failure: LittleFS could not mount or auto-format!");
-    } else {
-        Serial.println("Success! LittleFS partition initialized.");
-        Serial.printf("Total Flash Space: %d bytes\n", LittleFS.totalBytes());
-    }
    
 
     digitalWrite(TRIG, LOW);
@@ -91,12 +58,7 @@ void setup() {
         Serial.print("Your link: http://"); Serial.print(WiFi.localIP()); Serial.println("/");
         
         //firing up the server
-        server.on("/", handleRoot);
         server.on("/data", getData);
-    
-        routeJS();
-        routeCSS();
-
         server.begin();
 
     }
