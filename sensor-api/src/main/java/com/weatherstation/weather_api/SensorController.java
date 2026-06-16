@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SensorController {
 
-    private final WeatherService service;
+    private final SensorService service;
 
     @GetMapping("/weather")
     public SensorData getWeather() {

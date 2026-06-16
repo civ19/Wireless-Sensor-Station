@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SensorData { // making sure
-    private double temp;
+    private double temperature;
     private int light;
     private double distance;
 }

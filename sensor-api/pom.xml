@@ -8,8 +8,8 @@
 		<version>3.5.15</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.weatherstation</groupId>
-	<artifactId>weather-api</artifactId>
+	<groupId>com.sensorstation</groupId>
+	<artifactId>sensor-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name/>
 	<description/>

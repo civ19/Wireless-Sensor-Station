@@ -7,12 +7,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Service
 
 @RequiredArgsConstructor
-public class WeatherService { // <--- MAKE SURE 'public' IS EXPLICITLY WRITTEN HERE
+public class SensorService { // <--- MAKE SURE 'public' IS EXPLICITLY WRITTEN HERE
     //webclient startup
 
     private final WebClient webClient;
 
-    public WeatherService () {
+    public SensorService() {
         this.webClient = WebClient.builder().baseUrl("http://192.168.0.21").build(); //build a webclient on this IP
     }
 
