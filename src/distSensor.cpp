@@ -14,10 +14,6 @@ float readDistanceCM() {
     // Read echo pulse (with timeout!)
     long t = pulseIn(ECHO, HIGH, 30000); // 30ms timeout
 
-    // Debug (VERY useful right now)
-    Serial.print("Echo time (us): ");
-    Serial.println(t);
-
     // If no echo received
     if (t == 0) {
         return -1; // indicates "no reading"
@@ -26,7 +22,7 @@ float readDistanceCM() {
     // Convert to distance (cm)
     float dist = (t * 0.0343) / 2.0;
 
-    Serial.println(dist);
+
 
     return dist;
 }

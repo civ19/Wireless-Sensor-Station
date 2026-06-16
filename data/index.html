@@ -2,15 +2,32 @@
 <html>
 <head>
     <title>ESP32 Weather Station</title>
-    <script defer src="app.js"></script>  <!--request js now, but load js AFTER htrml is parsed-->
+    <link rel="stylesheet" href="style.css">
+    <script defer src="app.js"></script>
 </head>
 
 <body>
-    <h1>Wireless Sensor Station</h1>
 
-    <p>Temperature: <span id="temp">Loading...</span> </p>
-    <p>Light: <span id="light">Loading...</span> </p> 
-    <p>Distance: <span id="distance">Loading...</span></p>
+    <div class="container">
+
+        <h1>Wireless Sensor Station</h1>
+
+        <div class="card">
+            <h2>Temperature</h2>
+            <p id="temp">Loading...</p>
+        </div>
+
+        <div class="card">
+            <h2>Light Level</h2>
+            <p id="light">Loading...</p>
+        </div>
+
+        <div class="card">
+            <h2>Distance</h2>
+            <p id="distance">Loading...</p>
+        </div>
+
+    </div>
 
 </body>
 </html>

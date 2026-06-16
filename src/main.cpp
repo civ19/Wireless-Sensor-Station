@@ -39,6 +39,14 @@ void routeJS() {
     server.on("/data", getData);
 }
 
+void routeCSS() {
+    server.on("/style.css", []() {
+        File file = LittleFS.open("/style.css", "r");
+        server.streamFile(file, "text/css");
+        file.close();
+    });
+}
+
 void handleRoot() {
     File file = LittleFS.open("/index.html", "r");
 
@@ -87,6 +95,7 @@ void setup() {
         server.on("/data", getData);
     
         routeJS();
+        routeCSS();
 
         server.begin();
 
