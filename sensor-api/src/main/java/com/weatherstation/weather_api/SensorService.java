@@ -13,7 +13,7 @@ public class SensorService { // <--- MAKE SURE 'public' IS EXPLICITLY WRITTEN HE
     private final WebClient webClient;
 
     public SensorService() {
-        this.webClient = WebClient.builder().baseUrl("http://192.168.0.21").build(); //build a webclient on this IP
+        this.webClient = WebClient.builder().baseUrl("http://192.168.0.67").build(); //build a webclient on this IP
     }
 
     public SensorData fetchData() {

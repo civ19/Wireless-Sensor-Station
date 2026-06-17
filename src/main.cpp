@@ -6,8 +6,8 @@
 #include "distSensor.h"
 
 
-const char* ssid = "1051A";
-const char* password = "Secord1051A";
+const char* ssid = "MBO HotDesk";
+const char* password = "Focus4Success";
 
 WebServer server(80);  // Create a web server on port 80
 
